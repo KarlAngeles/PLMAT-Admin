@@ -14,4 +14,4 @@ Then start the example app with:
 ```
 npm run dev
 ```
-The app should now be up and running at [http://localhost:3000](http://localhost:3004/admin) :rocket:
+The app should now be up and running at [http://localhost:3004/admin](http://localhost:3004/admin) :rocket:
