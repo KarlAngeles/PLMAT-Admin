@@ -1,4 +1,4 @@
-# PLM Admission Test Admin Site (PLMAT)
+# PLM Admission Test Admin Site
 
 Developed for CSC-0321 Software Engineering 2
 ## Installation
