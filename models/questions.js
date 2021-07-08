@@ -7,9 +7,10 @@ const questionSchema = new Schema({
   correct_answer: String,
   subject: String,
   difficulty: String,
+  fileUrl: String,
   date_created: { type: Date, default: Date.now },
 })
 
-const Questions = mongoose.model('questions', questionSchema)
+const Questions = mongoose.model('Questions', questionSchema)
 
 module.exports = { questionSchema, Questions }

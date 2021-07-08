@@ -2,18 +2,19 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const reportSchema = new Schema({
-  questionnaire_id: Schema.Types.ObjectId,
-  benchmark: Number, 
-  algorithm_used: String,
-  seconds_for_easy: Number,
-  seconds_for_medium: Number,
-  seconds_for_hard: Number,
+  benchmark: [String], 
+  algorithm: String,
+  total_questions: Number,
+  questionnaire_quantity: Number,
+  minutes_for_easy: Number,
+  minutes_for_medium: Number,
+  minutes_for_hard: Number,
   number_of_easy: Number,
   number_of_medium: Number,
-  number_of_hard: Number ,
-  date_created: Date
+  number_of_hard: Number,
+  date_created: { type: Date, default: Date.now }
 })
 
-const Reports = mongoose.model('reports', reportSchema)
+const Reports = mongoose.model('Reports', reportSchema)
 
 module.exports = { reportSchema, Reports }
