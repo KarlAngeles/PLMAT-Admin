@@ -1,6 +1,7 @@
 const AdminBro = require('admin-bro');
 const AdminBroMongoose = require('@admin-bro/mongoose');
 const uploadFeature = require('@admin-bro/upload');
+const bcrypt = require('bcrypt');
 
 AdminBro.registerAdapter(AdminBroMongoose);
 
@@ -11,6 +12,17 @@ const { Reports } = require('../models/reports')
 const { Records } = require('../models/records')
 const { Settings } = require('../models/settings')
 const { Results } = require('../models/results')
+const { AdminUser } = require('../models/admin_users')
+
+
+const canEdit = ({ currentAdmin, record }) => {
+  return currentAdmin && (
+    currentAdmin.role === 'Admin'
+    || currentAdmin._id === record.param('ownerId')
+  )
+}
+
+const canModifyUsers = ({ currentAdmin }) => currentAdmin && currentAdmin.role === 'Admin'
 
 const options = {
   rootPath: '/admin',
@@ -64,11 +76,46 @@ const options = {
       actions: { new: { isAccessible: false } }
     }},
     { resource: Results, options: {
-      actions: { new: { isAccessible: false } }
+      actions: {
+      new: { isAccessible: false },
+      edit: { isAccessible: canModifyUsers },
+      delete: { isAccessible: canModifyUsers }, }
     }},
     { resource: Settings, options: {
       actions: { new: { isAccessible: false }, delete: { isAccessible: false } }
     }},
+    { resource: AdminUser,
+      options: {  
+        properties: {
+          encryptedPassword: {
+            isVisible: false,
+          },
+          password: {
+            type: 'string',
+            isVisible: {
+              list: false, edit: true, filter: false, show: false,
+            },
+          },
+        },
+        actions: {
+          new: {
+            before: async (request) => {
+              if(request.payload.password) {
+                request.payload = {
+                  ...request.payload,
+                  encryptedPassword: await bcrypt.hash(request.payload.password, 10),
+                  password: undefined,
+                }
+              }
+              return request
+            },
+          },
+          edit: { isAccessible: canModifyUsers },
+          delete: { isAccessible: canModifyUsers },
+          new: { isAccessible: canModifyUsers },
+        }
+      }
+    },    
   ],
   pages: {
     Generator: {
