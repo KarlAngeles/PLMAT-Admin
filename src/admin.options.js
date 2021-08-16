@@ -82,7 +82,7 @@ const options = {
       delete: { isAccessible: canModifyUsers }, }
     }},
     { resource: Settings, options: {
-      actions: { new: { isAccessible: false }, delete: { isAccessible: false } }
+      actions: { new: { isaAccessible: false }, delete: { isAccessible: false } }
     }},
     { resource: AdminUser,
       options: {  
@@ -133,6 +133,7 @@ const options = {
   },
   dashboard: {
     component: AdminBro.bundle('./components/Dashboard')
+    
   },
   branding: {
     companyName: 'PLMAT Admin',
