@@ -44,11 +44,6 @@ const options = {
     },
       features: [uploadFeature({
         provider: { aws: { 
-          region: 'ap-southeast-1',
-          bucket: 'plmat-bucket',
-          accessKeyId: 'AKIARRR4CVZ7O6Z4MWXM',
-          secretAccessKey: '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',
-          expires: 0  
         }},
         properties: {
           key: 'fileUrl',
